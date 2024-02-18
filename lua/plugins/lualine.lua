@@ -1,3 +1,7 @@
+-- Copied from
+-- ~/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/ui.lua
+local Util = require("lazyvim.util")
+
 return {
     {
         "nvim-lualine/lualine.nvim",
@@ -18,7 +22,6 @@ return {
             lualine_require.require = require
 
             local icons = require("lazyvim.config").icons
-            local util = require("lazyvim.util")
 
             vim.o.laststatus = vim.g.lualine_laststatus
 
@@ -33,7 +36,7 @@ return {
                     lualine_b = { "branch" },
 
                     lualine_c = {
-                        util.lualine.root_dir(),
+                        Util.lualine.root_dir(),
                         {
                             "diagnostics",
                             symbols = {
@@ -44,31 +47,31 @@ return {
                             },
                         },
                         { "filetype", icon_only = false, separator = "", padding = { left = 1, right = 0 } },
-                        { util.lualine.pretty_path() },
+                        { Util.lualine.pretty_path() },
                     },
                     lualine_x = {
                         -- stylua: ignore
                         {
                             function() return require("noice").api.status.command.get() end,
                             cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-                            color = util.ui.fg("Statement"),
+                            color = Util.ui.fg("Statement"),
                         },
                         -- stylua: ignore
                         {
                             function() return require("noice").api.status.mode.get() end,
                             cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-                            color = util.ui.fg("Constant"),
+                            color = Util.ui.fg("Constant"),
                         },
                         -- stylua: ignore
                         {
                             function() return "  " .. require("dap").status() end,
                             cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
-                            color = util.ui.fg("Debug"),
+                            color = Util.ui.fg("Debug"),
                         },
                         {
                             require("lazy.status").updates,
                             cond = require("lazy.status").has_updates,
-                            color = util.ui.fg("Special"),
+                            color = Util.ui.fg("Special"),
                         },
                         {
                             "diff",
